@@ -3,1346 +3,1126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Algoritmos Genéticos Interactivos</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <title>Ejercicios Python - PHYTON</title>
     <style>
-        .grafico-container {
-            width: 100%;
-            height: 400px;
-            margin-bottom: 20px;
-            border: 1px solid #dee2e6;
-            border-radius: 5px;
-            padding: 10px;
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
         }
-        .ejercicio {
-            background-color: #f8f9fa;
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 30px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        h1, h2 {
-            color: #2c3e50;
-        }
-        .btn-custom {
-            background-color: #3498db;
+        header {
+            background-color: #333;
             color: white;
-            margin-top: 10px;
+            text-align: center;
+            padding: 1rem;
         }
-        .btn-custom:hover {
-            background-color: #2980b9;
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-        input, select {
-            padding: 8px;
-            border-radius: 4px;
-            border: 1px solid #ced4da;
+        .button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
         }
-        .resultado {
-            font-weight: bold;
-            margin-top: 15px;
+        .button:hover {
+            background-color: #218838;
+        }
+        .btn-back {
+            background-color: #007bff;
+        }
+        .btn-back:hover {
+            background-color: #0056b3;
+        }
+        input, textarea, select {
+            width: 100%;
             padding: 10px;
-            background-color: #e8f4fc;
-            border-radius: 4px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
         }
-        .parametros {
+        textarea {
+            height: 200px;
+        }
+        h2 {
+            color: #333;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 5px;
+            margin-top: 30px;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(20, 30px);
+            grid-gap: 2px;
+            margin-top: 20px;
+        }
+        .cell {
+            width: 30px;
+            height: 30px;
+            background-color: #f4f4f9;
+            border: 1px solid #ccc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+        .obstacle {
+            background-color: #000;
+        }
+        .start {
+            background-color: green;
+            color: white;
+        }
+        .goal {
+            background-color: red;
+            color: white;
+        }
+        .visited {
+            background-color: yellow;
+        }
+        .path {
+            background-color: blue;
+        }
+        .slider-container {
+            margin: 15px 0;
+        }
+        .slider-container label {
+            display: inline-block;
+            width: 200px;
+        }
+        .info-box {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
             margin-bottom: 15px;
         }
-        .parametro-group {
-            margin-bottom: 10px;
+        .example-box {
+            display: flex;
+            margin: 10px 0;
         }
-        table {
-            width: 100%;
-            margin-top: 15px;
-            border-collapse: collapse;
+        .good-example {
+            flex: 1;
+            padding: 10px;
+            background-color: #e8f4f8;
+            border-radius: 5px;
+            margin-right: 10px;
         }
-        th, td {
+        .bad-example {
+            flex: 1;
+            padding: 10px;
+            background-color: #fae8e8;
+            border-radius: 5px;
+        }
+        .dependency-display {
+            min-height: 50px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        .result-box {
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        .warning {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        .info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+        }
+        .tree-container {
+            margin: 20px 0;
+            padding: 15px;
             border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
+            border-radius: 5px;
+            background-color: #f9f9f9;
         }
-        th {
-            background-color: #f2f2f2;
+        .tree-node {
+            display: inline-block;
+            padding: 5px 10px;
+            margin: 5px;
+            border: 1px solid #999;
+            border-radius: 3px;
+            background-color: white;
+        }
+        .tree-line {
+            display: inline-block;
+            width: 20px;
+            height: 2px;
+            background-color: #999;
+            margin: 0 5px;
+            vertical-align: middle;
+        }
+        .flex-row {
+            display: flex;
+            gap: 10px;
+        }
+        .flex-col {
+            flex: 1;
         }
     </style>
 </head>
-<body class="container py-4">
-    <h1 class="text-center mb-4">Algoritmos Genéticos Interactivos</h1>
+<body>
+    <header>
+        <h1>Parcial 2</h1>
+    </header>
 
-    <!-- Ejercicio 1: Optimización de función cuadrática -->
-    <div class="ejercicio">
-        <h2>Ejercicio 1: Optimización de Función Cuadrática</h2>
-        <p>Minimizar la función <strong>f(x) = x²</strong> usando un algoritmo genético.</p>
-        
-        <div class="row parametros">
-            <div class="col-md-4 parametro-group">
-                <label for="gen1" class="form-label">Generaciones:</label>
-                <input type="number" id="gen1" class="form-control" value="50" min="10">
-            </div>
-            <div class="col-md-4 parametro-group">
-                <label for="pop1" class="form-label">Población:</label>
-                <input type="number" id="pop1" class="form-control" value="20" min="5">
+    <div class="container">
+        <button class="button btn-back" onclick="window.location.href='index.html'">Volver al Inicio</button>
+
+        <!-- Punto 1: Carrito de Compras -->
+        <h2>Punto 1: Carrito de Compras</h2>
+        <div>
+            <label for="producto">Producto:</label>
+            <input type="text" id="producto" placeholder="Escribe el nombre del producto">
+            <button class="button" id="agregarBtn">Agregar</button>
+            <button class="button" id="eliminarBtn">Eliminar</button>
+            <button class="button" id="mostrarBtn">Mostrar Carrito</button>
+        </div>
+        <h3>Carrito:</h3>
+        <textarea id="carritoArea" readonly></textarea>
+
+        <!-- Punto 2: Registro de Correos -->
+        <h2>Punto 2: Registro de Correos</h2>
+        <div>
+            <label for="correo">Correo:</label>
+            <input type="email" id="correo" placeholder="Escribe el correo">
+            <button class="button" id="agregarCorreoBtn">Agregar correo</button>
+        </div>
+        <h3>Correos Registrados:</h3>
+        <textarea id="correosArea" readonly></textarea>
+
+        <!-- Punto 3: Agenda de Contactos -->
+        <h2>Punto 3: Agenda de Contactos</h2>
+        <div>
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" placeholder="Escribe el nombre del contacto">
+            <label for="telefono">Teléfono:</label>
+            <input type="text" id="telefono" placeholder="Escribe el teléfono">
+            <button class="button" id="agregarContactoBtn">Agregar</button>
+            <button class="button" id="buscarContactoBtn">Buscar</button>
+        </div>
+        <h3>Agenda de Contactos:</h3>
+        <textarea id="agendaArea" readonly></textarea>
+
+        <!-- Punto 4: BFS y DFS -->
+        <h2>Punto 4: BFS y DFS</h2>
+        <div>
+            <button class="button" onclick="runBFS()">Ejecutar BFS</button>
+            <button class="button" onclick="runDFS()">Ejecutar DFS</button>
+            <button class="button" onclick="resetGrid()">Reiniciar</button>
+        </div>
+        <h3>Grid:</h3>
+        <div id="grid-container" class="grid-container"></div>
+
+        <!-- Punto 5: DFS con Obstáculos Automáticos -->
+        <h2>Punto 5: DFS con Obstáculos Automáticos</h2>
+        <div class="slider-container">
+            <label for="obstacle-density">Densidad de obstáculos: <span id="density-value">30</span>%</label>
+            <input type="range" id="obstacle-density" min="0" max="50" value="30" oninput="updateDensity(this.value)">
+        </div>
+        <div>
+            <button class="button" onclick="runAutoDFS()">Ejecutar DFS Automático</button>
+            <button class="button" onclick="resetAutoGrid()">Generar Nueva Grid</button>
+        </div>
+        <h3>Grid Automática:</h3>
+        <div id="auto-grid-container" class="grid-container"></div>
+
+        <!-- Punto 6: Simulador de Stack -->
+        <h2>Punto 6: Simulador de Stack</h2>
+        <div>
+            <label for="stackInput">Elemento:</label>
+            <input type="text" id="stackInput" placeholder="Escribe un elemento">
+            <button class="button" onclick="pushStack()">Agregar</button>
+            <button class="button" onclick="popStack()">Eliminar</button>
+            <button class="button" onclick="showStack()">Mostrar Stack</button>
+        </div>
+        <h3>Contenido del Stack:</h3>
+        <textarea id="stackArea" readonly></textarea>
+
+        <!-- Punto 7: Simulador de Queue -->
+        <h2>Punto 7: Simulador de Queue</h2>
+        <div>
+            <label for="queueInput">Elemento:</label>
+            <input type="text" id="queueInput" placeholder="Agrega un paciente">
+            <button class="button" onclick="enqueue()">Agregar</button>
+            <button class="button" onclick="dequeue()">Eliminar</button>
+            <button class="button" onclick="showQueue()">Mostrar</button>
+        </div>
+        <h3>Contenido de la Queue:</h3>
+        <textarea id="queueArea" readonly></textarea>
+
+        <!-- Punto 8: Árbol Binario de Búsqueda -->
+        <h2>Punto 8: Árbol Binario de Búsqueda</h2>
+        <div>
+            <label for="arbolValor">Valor:</label>
+            <input type="number" id="arbolValor" placeholder="Ingrese un número">
+            <button class="button" onclick="insertarEnArbol()">Insertar</button>
+            <button class="button" onclick="buscarEnArbol()">Buscar</button>
+            <button class="button" onclick="mostrarArbol()">Mostrar Árbol</button>
+            <button class="button" onclick="reiniciarArbol()">Reiniciar Árbol</button>
+        </div>
+        <h3>Representación del Árbol:</h3>
+        <div id="arbolVisual" class="tree-container"></div>
+        <textarea id="arbolArea" readonly></textarea>
+
+        <!-- Punto 9: Cálculo de Profundidad de Árbol -->
+        <h2>Punto 9: Cálculo de Profundidad de Árbol</h2>
+        <div>
+            <p>Este cálculo se realiza sobre el árbol creado en el Punto 8.</p>
+            <button class="button" onclick="calcularProfundidad()">Calcular Profundidad</button>
+        </div>
+        <h3>Resultado:</h3>
+        <textarea id="profundidadArea" readonly></textarea>
+
+        <!-- Punto 10: Detector de Dependencias Circulares (Versión Mejorada) -->
+        <h2>Punto 10: Detector de Dependencias Circulares</h2>
+        <div class="info-box">
+            <h3 style="margin-top: 0; color: #2c3e50;">¿Cómo funciona?</h3>
+            <p>Esta herramienta detecta cuando los módulos se necesitan unos a otros en círculo, lo que puede causar problemas.</p>
+            
+            <div class="example-box">
+                <div class="good-example">
+                    <h4 style="margin-top: 0;">Ejemplo Correcto</h4>
+                    <p>Pantalla → Datos<br>Datos → Almacenamiento</p>
+                </div>
+                <div class="bad-example">
+                    <h4 style="margin-top: 0;">Ejemplo con Problema</h4>
+                    <p>Pantalla → Datos<br>Datos → Pantalla</p>
+                </div>
             </div>
         </div>
-        
-        <button id="btn-ej1" class="btn btn-custom">Ejecutar Algoritmo Genético</button>
-        <div id="grafico-ej1" class="grafico-container"></div>
-        <div id="resultado-ej1" class="resultado"></div>
+
+        <div class="flex-row">
+            <div class="flex-col">
+                <label for="modulo" style="display: block; margin-bottom: 5px; font-weight: bold;">Módulo:</label>
+                <input type="text" id="modulo" placeholder="Ej: Pantalla">
+            </div>
+            <div class="flex-col">
+                <label for="dependencia" style="display: block; margin-bottom: 5px; font-weight: bold;">Depende de:</label>
+                <input type="text" id="dependencia" placeholder="Ej: Datos">
+            </div>
+        </div>
+
+        <div class="flex-row" style="margin-bottom: 20px;">
+            <button class="button" onclick="agregarDependencia()" style="background-color: #28a745; flex: 1;">
+                Agregar Dependencia
+            </button>
+            <button class="button" onclick="verificarCiclos()" style="background-color: #17a2b8; flex: 1;">
+                Verificar Ciclos
+            </button>
+            <button class="button" onclick="reiniciarGrafo()" style="background-color: #6c757d; flex: 1;">
+                Reiniciar Todo
+            </button>
+        </div>
+
+        <h3 style="border-bottom: 2px solid #eee; padding-bottom: 5px;">Dependencias Actuales:</h3>
+        <div id="grafoVisual" class="dependency-display">
+            <p style="color: #6c757d; margin: 0;">(Aún no hay dependencias agregadas)</p>
+        </div>
+
+        <h3 style="border-bottom: 2px solid #eee; padding-bottom: 5px;">Resultado:</h3>
+        <div id="resultadoCiclos" class="result-box info">
+            <p style="margin: 0;">Presiona "Verificar Ciclos" para analizar</p>
+        </div>
     </div>
 
-    <!-- Ejercicio 2: Maximización de función lineal -->
-    <div class="ejercicio">
-        <h2>Ejercicio 2: Maximización de Función Lineal</h2>
-        <p>Maximizar la función <strong>f(x) = 5x + 3</strong> usando un algoritmo genético.</p>
-        
-        <div class="row parametros">
-            <div class="col-md-4 parametro-group">
-                <label for="gen2" class="form-label">Generaciones:</label>
-                <input type="number" id="gen2" class="form-control" value="50" min="10">
-            </div>
-            <div class="col-md-4 parametro-group">
-                <label for="pop2" class="form-label">Población:</label>
-                <input type="number" id="pop2" class="form-control" value="20" min="5">
-            </div>
-        </div>
-        
-        <button id="btn-ej2" class="btn btn-custom">Ejecutar Algoritmo Genético</button>
-        <div id="grafico-ej2" class="grafico-container"></div>
-        <div id="resultado-ej2" class="resultado"></div>
-    </div>
-
-    <!-- Ejercicio 3: Optimización de la Función de Ackley -->
-    <div class="ejercicio">
-        <h2>Ejercicio 3: Optimización de la Función de Ackley</h2>
-        <div class="row parametros">
-            <div class="col-md-4 parametro-group">
-                <label for="num-individuos" class="form-label">Número de individuos:</label>
-                <input type="number" id="num-individuos" class="form-control" value="50" min="10">
-            </div>
-            <div class="col-md-4 parametro-group">
-                <label for="generaciones" class="form-label">Generaciones:</label>
-                <input type="number" id="generaciones" class="form-control" value="100" min="10">
-            </div>
-            <div class="col-md-4 parametro-group">
-                <label for="tasa-mutacion" class="form-label">Tasa de mutación (0-1):</label>
-                <input type="number" id="tasa-mutacion" class="form-control" value="0.1" min="0" max="1" step="0.01">
-            </div>
-        </div>
-        <button id="ejecutar-ackley" class="btn btn-custom">Ejecutar Algoritmo Genético</button>
-        <div id="grafico-ackley" class="grafico-container"></div>
-        <div id="resultado-ackley" class="resultado"></div>
-    </div>
-
-    <!-- Ejercicio 4: Algoritmo Genético para Número Primo Más Cercano -->
-    <div class="ejercicio">
-        <h2>Ejercicio 4: Algoritmo Genético para Número Primo Más Cercano</h2>
-        <p>Ingresa un número para encontrar el primo más cercano usando un algoritmo genético:</p>
-        <div class="row">
-            <div class="col-md-4">
-                <input type="number" id="numero" class="form-control" value="20" min="2">
-            </div>
-            <div class="col-md-4">
-                <button id="ejecutar-primo" class="btn btn-custom">Encontrar Primo</button>
-            </div>
-        </div>
-        <div id="resultado-primo" class="resultado"></div>
-    </div>
-
-    <!-- Ejercicio 5: Problema del Cambio de Monedas -->
-    <div class="ejercicio">
-        <h2>Ejercicio 5: Problema del Cambio de Monedas</h2>
-        <p>Ingresa la cantidad de dinero para dar el cambio exacto:</p>
-        <div class="row">
-            <div class="col-md-4">
-                <input type="number" id="monto" class="form-control" value="47" min="1">
-            </div>
-            <div class="col-md-4">
-                <button id="ejecutar-monedas" class="btn btn-custom">Calcular Cambio</button>
-            </div>
-        </div>
-        <div id="resultado-monedas" class="resultado"></div>
-    </div>
-
-    <!-- Ejercicio 6: Problema del Viajante -->
-    <div class="ejercicio">
-        <h2>Ejercicio 6: Problema del Viajante (TSP)</h2>
-        <p>Optimización de ruta para visitar ciudades usando un algoritmo genético.</p>
-        <div class="row parametros">
-            <div class="col-md-4 parametro-group">
-                <label for="num-ciudades" class="form-label">Número de ciudades:</label>
-                <input type="number" id="num-ciudades" class="form-control" value="5" min="3" max="10">
-            </div>
-            <div class="col-md-4 parametro-group">
-                <label for="pob-tsp" class="form-label">Población:</label>
-                <input type="number" id="pob-tsp" class="form-control" value="50" min="10">
-            </div>
-            <div class="col-md-4 parametro-group">
-                <label for="gen-tsp" class="form-label">Generaciones:</label>
-                <input type="number" id="gen-tsp" class="form-control" value="100" min="10">
-            </div>
-        </div>
-        <button id="ejecutar-tsp" class="btn btn-custom">Optimizar Ruta</button>
-        <div id="grafico-tsp" class="grafico-container"></div>
-        <div id="resultado-tsp" class="resultado"></div>
-    </div>
-
-   <!-- Ejercicio 7: Optimización del Diseño de un Puente -->
-<div class="ejercicio">
-    <h2>Ejercicio 7: Optimización del Diseño de un Puente</h2>
-    <p>Modela un problema donde se busca minimizar el peso de una estructura de puente sin que se rompa.</p>
-    <div class="row parametros">
-        <div class="col-md-4 parametro-group">
-            <label for="pob-puente" class="form-label">Población:</label>
-            <input type="number" id="pob-puente" class="form-control" value="50" min="10">
-        </div>
-        <div class="col-md-4 parametro-group">
-            <label for="gen-puente" class="form-label">Generaciones:</label>
-            <input type="number" id="gen-puente" class="form-control" value="100" min="10">
-        </div>
-        <div class="col-md-4 parametro-group">
-            <label for="mut-puente" class="form-label">Tasa de mutación:</label>
-            <input type="number" id="mut-puente" class="form-control" value="0.1" min="0" max="1" step="0.01">
-        </div>
-    </div>
-    <button id="ejecutar-puente" class="btn btn-custom">Optimizar Diseño</button>
-    <div id="resultado-puente" class="resultado"></div>
-    <div id="grafico-puente" class="grafico-container"></div>
-</div>
-
-  <!-- Ejercicio 8: Asignación de Recursos en una Empresa -->
-<div class="ejercicio">
-    <h2>Ejercicio 8: Asignación de Recursos en una Empresa</h2>
-    <p>Asigna recursos (como empleados o maquinaria) a tareas, de modo que el tiempo total de ejecución sea el mínimo.</p>
-    <div class="row parametros">
-        <div class="col-md-4 parametro-group">
-            <label for="num-tareas" class="form-label">Número de tareas:</label>
-            <input type="number" id="num-tareas" class="form-control" value="5" min="2" max="10">
-        </div>
-        <div class="col-md-4 parametro-group">
-            <label for="num-recursos" class="form-label">Número de recursos:</label>
-            <input type="number" id="num-recursos" class="form-control" value="3" min="2" max="5">
-        </div>
-        <div class="col-md-4 parametro-group">
-            <label for="pob-asignacion" class="form-label">Población:</label>
-            <input type="number" id="pob-asignacion" class="form-control" value="50" min="10">
-        </div>
-    </div>
-    <button id="ejecutar-asignacion" class="btn btn-custom">Optimizar Asignación</button>
-    <div id="resultado-asignacion" class="resultado"></div>
-    <div id="tabla-asignacion"></div>
-    <div id="grafico-asignacion" class="grafico-container"></div>
-</div>
-
-    <!-- Ejercicio 9: Selección de Características en ML -->
-<div class="ejercicio">
-    <h2>Ejercicio 9: Selección de Características en ML</h2>
-    <p>Usa un algoritmo genético para seleccionar las características más relevantes para un modelo de clasificación.</p>
-    <div class="row parametros">
-        <div class="col-md-4 parametro-group">
-            <label for="dataset" class="form-label">Conjunto de datos:</label>
-            <select id="dataset" class="form-control">
-                <option value="iris">Iris</option>
-                <option value="wine">Wine</option>
-                <option value="breast_cancer">Breast Cancer</option>
-            </select>
-        </div>
-        <div class="col-md-4 parametro-group">
-            <label for="pob-caracteristicas" class="form-label">Población:</label>
-            <input type="number" id="pob-caracteristicas" class="form-control" value="50" min="10">
-        </div>
-        <div class="col-md-4 parametro-group">
-            <label for="gen-caracteristicas" class="form-label">Generaciones:</label>
-            <input type="number" id="gen-caracteristicas" class="form-control" value="50" min="10">
-        </div>
-    </div>
-    <button id="ejecutar-caracteristicas" class="btn btn-custom">Seleccionar Características</button>
-    <div id="resultado-caracteristicas" class="resultado"></div>
-    <div id="grafico-caracteristicas" class="grafico-container"></div>
-</div>
-
-       <!-- Ejercicio 10: Optimización de una Red de Distribución de Energía -->
-<div class="ejercicio">
-    <h2>Ejercicio 10: Optimización de Red Eléctrica</h2>
-    <p>Optimiza los parámetros de una red de distribución eléctrica para minimizar las pérdidas de energía.</p>
-    <div class="row parametros">
-        <div class="col-md-4 parametro-group">
-            <label for="num-nodos" class="form-label">Número de nodos:</label>
-            <input type="number" id="num-nodos" class="form-control" value="5" min="3" max="10">
-        </div>
-        <div class="col-md-4 parametro-group">
-            <label for="pob-red" class="form-label">Población:</label>
-            <input type="number" id="pob-red" class="form-control" value="50" min="10">
-        </div>
-        <div class="col-md-4 parametro-group">
-            <label for="gen-red" class="form-label">Generaciones:</label>
-            <input type="number" id="gen-red" class="form-control" value="100" min="10">
-        </div>
-    </div>
-    <button id="ejecutar-red" class="btn btn-custom">Optimizar Red</button>
-    <div id="resultado-red" class="resultado"></div>
-    <div id="grafico-red" class="grafico-container"></div>
-</div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Función auxiliar para obtener un número aleatorio en un rango
-        function getRandomInt(min, max) {
-            return Math.floor(Math.random() * (max - min + 1)) + min;
+        // =============================================
+        // Punto 1: Carrito de Compras
+        // =============================================
+        let carrito = [];
+        
+        function agregarProducto() {
+            let producto = document.getElementById("producto").value.trim();
+            if (producto) {
+                carrito.push(producto);
+                document.getElementById("producto").value = "";
+                mostrarCarrito();
+            }
         }
 
-        // Función auxiliar para obtener un número aleatorio decimal en un rango
-        function getRandomFloat(min, max) {
-            return Math.random() * (max - min) + min;
+        function eliminarProducto() {
+            let producto = document.getElementById("producto").value.trim();
+            let index = carrito.indexOf(producto);
+            if (index > -1) {
+                carrito.splice(index, 1);
+                alert(`Producto '${producto}' eliminado.`);
+                mostrarCarrito();
+            } else {
+                alert("Producto no encontrado.");
+            }
+            document.getElementById("producto").value = "";
         }
 
-        // Función para verificar si un número es primo
-        function esPrimo(num) {
-            if (num <= 1) return false;
-            if (num <= 3) return true;
-            if (num % 2 === 0 || num % 3 === 0) return false;
-            let i = 5;
-            while (i * i <= num) {
-                if (num % i === 0 || num % (i + 2) === 0) return false;
-                i += 6;
-            }
-            return true;
-        }
-
-        // Función para encontrar el número primo más cercano
-        function encontrarPrimoCercano(num) {
-            if (esPrimo(num)) return num;
-            
-            let menor = num - 1;
-            while (menor >= 2 && !esPrimo(menor)) {
-                menor--;
-            }
-            
-            let mayor = num + 1;
-            while (!esPrimo(mayor)) {
-                mayor++;
-            }
-            
-            return (num - menor <= mayor - num) ? menor : mayor;
-        }
-
-        // Función para simular un algoritmo genético básico
-        function simularAlgoritmoGenetico(generaciones, poblacion, funcionFitness, rangoMin, rangoMax) {
-            let mejorIndividuo = null;
-            let mejorFitness = Infinity;
-            let historial = [];
-            
-            // Generar población inicial
-            let poblacionActual = [];
-            for (let i = 0; i < poblacion; i++) {
-                poblacionActual.push(getRandomFloat(rangoMin, rangoMax));
-            }
-            
-            // Evolucionar por generaciones
-            for (let gen = 0; gen < generaciones; gen++) {
-                // Evaluar fitness
-                let fitness = poblacionActual.map(individuo => funcionFitness(individuo));
-                
-                // Encontrar el mejor individuo de esta generación
-                let mejorFitnessGen = Math.min(...fitness);
-                let mejorIndividuoGen = poblacionActual[fitness.indexOf(mejorFitnessGen)];
-                
-                // Actualizar el mejor global
-                if (mejorFitnessGen < mejorFitness) {
-                    mejorFitness = mejorFitnessGen;
-                    mejorIndividuo = mejorIndividuoGen;
-                }
-                
-                historial.push({
-                    generacion: gen,
-                    mejorFitness: mejorFitnessGen,
-                    mejorIndividuo: mejorIndividuoGen
+        function mostrarCarrito() {
+            let carritoArea = document.getElementById("carritoArea");
+            carritoArea.value = "Carrito de Compras:\n";
+            if (carrito.length > 0) {
+                carrito.forEach(producto => {
+                    carritoArea.value += "- " + producto + "\n";
                 });
-                
-                // Selección (torneo simple)
-                let nuevaPoblacion = [];
-                for (let i = 0; i < poblacion; i++) {
-                    // Seleccionar 2 individuos al azar
-                    let idx1 = getRandomInt(0, poblacion - 1);
-                    let idx2 = getRandomInt(0, poblacion - 1);
-                    
-                    // El mejor de los dos pasa a la siguiente generación
-                    let ganador = fitness[idx1] < fitness[idx2] ? 
-                        poblacionActual[idx1] : poblacionActual[idx2];
-                    nuevaPoblacion.push(ganador);
-                }
-                
-                // Mutación (pequeña perturbación)
-                poblacionActual = nuevaPoblacion.map(individuo => {
-                    if (Math.random() < 0.1) { // 10% de probabilidad de mutación
-                        return individuo + getRandomFloat(-0.5, 0.5);
-                    }
-                    return individuo;
-                });
+            } else {
+                carritoArea.value += "El carrito está vacío.";
             }
-            
-            return { mejorIndividuo, mejorFitness, historial };
         }
 
-        // Función para crear un gráfico con Plotly
-        function crearGrafico(contenedorId, titulo, historial) {
-            const generaciones = historial.map(item => item.generacion);
-            const fitness = historial.map(item => item.mejorFitness);
-            
-            const trace = {
-                x: generaciones,
-                y: fitness,
-                type: 'scatter',
-                mode: 'lines+markers',
-                name: 'Mejor Fitness'
-            };
-            
-            const layout = {
-                title: titulo,
-                xaxis: { title: 'Generación' },
-                yaxis: { title: 'Fitness' }
-            };
-            
-            Plotly.newPlot(contenedorId, [trace], layout);
-        }
+        document.getElementById("agregarBtn").addEventListener("click", agregarProducto);
+        document.getElementById("eliminarBtn").addEventListener("click", eliminarProducto);
+        document.getElementById("mostrarBtn").addEventListener("click", mostrarCarrito);
 
-        // Ejercicio 1: Optimización de función cuadrática
-        document.getElementById('btn-ej1').addEventListener('click', function() {
-            const generaciones = parseInt(document.getElementById('gen1').value);
-            const poblacion = parseInt(document.getElementById('pop1').value);
-            
-            // Función de fitness: queremos minimizar x²
-            const funcionFitness = x => x * x;
-            
-            // Ejecutar algoritmo genético
-            const resultado = simularAlgoritmoGenetico(generaciones, poblacion, funcionFitness, -10, 10);
-            
-            // Mostrar resultados
-            document.getElementById('resultado-ej1').innerHTML = `
-                Mejor solución encontrada: x = ${resultado.mejorIndividuo.toFixed(4)}<br>
-                Valor mínimo encontrado: f(x) = ${resultado.mejorFitness.toFixed(4)}
-            `;
-            
-            // Crear gráfico
-            crearGrafico('grafico-ej1', 'Evolución del Fitness (f(x) = x²)', resultado.historial);
-        });
+        // =============================================
+        // Punto 2: Registro de Correos
+        // =============================================
+        let correos = new Set();
 
-        // Ejercicio 2: Maximización de función lineal
-        document.getElementById('btn-ej2').addEventListener('click', function() {
-            const generaciones = parseInt(document.getElementById('gen2').value);
-            const poblacion = parseInt(document.getElementById('pop2').value);
-            
-            // Función de fitness: queremos maximizar 5x + 3 (que es lo mismo que minimizar -(5x + 3))
-            const funcionFitness = x => -(5 * x + 3);
-            
-            // Ejecutar algoritmo genético
-            const resultado = simularAlgoritmoGenetico(generaciones, poblacion, funcionFitness, -10, 10);
-            
-            // Mostrar resultados (convertimos de vuelta el fitness)
-            document.getElementById('resultado-ej2').innerHTML = `
-                Mejor solución encontrada: x = ${resultado.mejorIndividuo.toFixed(4)}<br>
-                Valor máximo encontrado: f(x) = ${(-resultado.mejorFitness).toFixed(4)}
-            `;
-            
-            // Crear gráfico (ajustamos el fitness para mostrar valores positivos)
-            const historialAjustado = resultado.historial.map(item => ({
-                ...item,
-                mejorFitness: -item.mejorFitness
-            }));
-            crearGrafico('grafico-ej2', 'Evolución del Fitness (f(x) = 5x + 3)', historialAjustado);
-        });
-
-        // Ejercicio 3: Optimización de la Función de Ackley
-        document.getElementById('ejecutar-ackley').addEventListener('click', function() {
-            const numIndividuos = parseInt(document.getElementById('num-individuos').value);
-            const generaciones = parseInt(document.getElementById('generaciones').value);
-            const tasaMutacion = parseFloat(document.getElementById('tasa-mutacion').value);
-            
-            // Función de Ackley (versión simplificada para 1D)
-            const ackley = x => {
-                const term1 = -0.2 * Math.sqrt(x*x);
-                const term2 = Math.cos(2 * Math.PI * x);
-                return -20 * Math.exp(term1) - Math.exp(term2) + 20 + Math.E;
-            };
-            
-            // Función de fitness
-            const funcionFitness = ackley;
-            
-            // Ejecutar algoritmo genético
-            const resultado = simularAlgoritmoGenetico(generaciones, numIndividuos, funcionFitness, -5, 5);
-            
-            // Mostrar resultados
-            document.getElementById('resultado-ackley').innerHTML = `
-                Mejor solución encontrada: x = ${resultado.mejorIndividuo.toFixed(4)}<br>
-                Valor mínimo encontrado: f(x) = ${resultado.mejorFitness.toFixed(4)}
-            `;
-            
-            // Crear gráfico
-            crearGrafico('grafico-ackley', 'Evolución del Fitness (Función de Ackley)', resultado.historial);
-        });
-
-        // Ejercicio 4: Algoritmo Genético para Número Primo Más Cercano
-        document.getElementById('ejecutar-primo').addEventListener('click', function() {
-            const numero = parseInt(document.getElementById('numero').value);
-            
-            // Encontrar el primo más cercano (versión simplificada sin AG)
-            const primo = encontrarPrimoCercano(numero);
-            
-            // Mostrar resultados
-            document.getElementById('resultado-primo').innerHTML = `
-                Número ingresado: ${numero}<br>
-                Número primo más cercano: ${primo}
-            `;
-        });
-
-        // Ejercicio 5: Problema del Cambio de Monedas
-        document.getElementById('ejecutar-monedas').addEventListener('click', function() {
-            const monto = parseInt(document.getElementById('monto').value);
-            
-            // Denominaciones de monedas
-            const monedas = [50, 20, 10, 5, 2, 1];
-            let cambio = {};
-            let resto = monto;
-            
-            // Algoritmo voraz para el cambio
-            monedas.forEach(moneda => {
-                if (resto >= moneda) {
-                    const cantidad = Math.floor(resto / moneda);
-                    cambio[moneda] = cantidad;
-                    resto = resto % moneda;
+        function agregarCorreo() {
+            let correo = document.getElementById("correo").value.trim();
+            if (correo) {
+                if (!correos.has(correo)) {
+                    correos.add(correo);
+                    alert("Correo registrado.");
+                } else {
+                    alert("Correo ya registrado.");
                 }
+                actualizarCorreos();
+                document.getElementById("correo").value = "";
+            }
+        }
+
+        function actualizarCorreos() {
+            let correosArea = document.getElementById("correosArea");
+            correosArea.value = "Correos Registrados:\n";
+            correos.forEach(correo => {
+                correosArea.value += "- " + correo + "\n";
             });
-            
-            // Formatear el resultado
-            let resultadoStr = `Cambio para $${monto}:<br><ul>`;
-            for (const [moneda, cantidad] of Object.entries(cambio)) {
-                resultadoStr += `<li>${cantidad} moneda(s) de $${moneda}</li>`;
-            }
-            resultadoStr += `</ul>`;
-            
-            // Mostrar resultados
-            document.getElementById('resultado-monedas').innerHTML = resultadoStr;
-        });
+        }
 
-        // Ejercicio 6: Problema del Viajante (TSP)
-        document.getElementById('ejecutar-tsp').addEventListener('click', function() {
-            const numCiudades = parseInt(document.getElementById('num-ciudades').value);
-            const poblacion = parseInt(document.getElementById('pob-tsp').value);
-            const generaciones = parseInt(document.getElementById('gen-tsp').value);
-            
-            // Generar ciudades aleatorias
-            const ciudades = [];
-            for (let i = 0; i < numCiudades; i++) {
-                ciudades.push({
-                    id: i,
-                    x: getRandomInt(0, 100),
-                    y: getRandomInt(0, 100)
-                });
+        document.getElementById("agregarCorreoBtn").addEventListener("click", agregarCorreo);
+
+        // =============================================
+        // Punto 3: Agenda de Contactos
+        // =============================================
+        let agenda = {};
+
+        function agregarContacto() {
+            let nombre = document.getElementById("nombre").value.trim();
+            let telefono = document.getElementById("telefono").value.trim();
+            if (nombre && telefono) {
+                agenda[nombre] = telefono;
+                alert("Contacto agregado.");
+                actualizarAgenda();
+                document.getElementById("nombre").value = "";
+                document.getElementById("telefono").value = "";
             }
-            
-            // Función para calcular la distancia entre dos ciudades
-            function distancia(ciudadA, ciudadB) {
-                const dx = ciudadA.x - ciudadB.x;
-                const dy = ciudadA.y - ciudadB.y;
-                return Math.sqrt(dx*dx + dy*dy);
+        }
+
+        function buscarContacto() {
+            let nombre = document.getElementById("nombre").value.trim();
+            if (nombre in agenda) {
+                alert(`Teléfono: ${agenda[nombre]}`);
+            } else {
+                alert("Contacto no encontrado.");
             }
-            
-            // Función para calcular la distancia total de una ruta
-            function distanciaTotal(ruta) {
-                let total = 0;
-                for (let i = 0; i < ruta.length - 1; i++) {
-                    total += distancia(ruta[i], ruta[i+1]);
-                }
-                // Volver al punto de inicio
-                total += distancia(ruta[ruta.length-1], ruta[0]);
-                return total;
+        }
+
+        function actualizarAgenda() {
+            let agendaArea = document.getElementById("agendaArea");
+            agendaArea.value = "Agenda de Contactos:\n";
+            for (let nombre in agenda) {
+                agendaArea.value += `${nombre}: ${agenda[nombre]}\n`;
             }
-            
-            // Función de fitness (queremos minimizar la distancia)
-            function fitness(ruta) {
-                return distanciaTotal(ruta);
-            }
-            
-            // Generar una ruta aleatoria
-            function rutaAleatoria() {
-                const ruta = [...ciudades];
-                // Algoritmo de Fisher-Yates para mezclar
-                for (let i = ruta.length - 1; i > 0; i--) {
-                    const j = Math.floor(Math.random() * (i + 1));
-                    [ruta[i], ruta[j]] = [ruta[j], ruta[i]];
-                }
-                return ruta;
-            }
-            
-            // Operador de cruce (OX)
-            function cruzar(padre1, padre2) {
-                const size = padre1.length;
-                const hijo = new Array(size);
-                
-                // Seleccionar un segmento del padre1
-                const start = getRandomInt(0, size - 1);
-                const end = getRandomInt(start + 1, size);
-                
-                // Copiar el segmento al hijo
-                for (let i = start; i < end; i++) {
-                    hijo[i] = padre1[i];
-                }
-                
-                // Completar con las ciudades del padre2 en orden
-                let posHijo = 0;
-                for (let i = 0; i < size; i++) {
-                    if (posHijo === start) posHijo = end;
-                    if (!hijo.includes(padre2[i])) {
-                        hijo[posHijo] = padre2[i];
-                        posHijo++;
+        }
+
+        document.getElementById("agregarContactoBtn").addEventListener("click", agregarContacto);
+        document.getElementById("buscarContactoBtn").addEventListener("click", buscarContacto);
+
+        // =============================================
+        // Punto 4: BFS y DFS
+        // =============================================
+        const TAM = 20;
+        let grid = Array(TAM).fill().map(() => Array(TAM).fill(0));
+        let start = { x: -1, y: -1 };
+        let goal = { x: -1, y: -1 };
+        const MOVS = [[-1, 0], [1, 0], [0, -1], [0, 1]];
+
+        function initGrid() {
+            const container = document.getElementById("grid-container");
+            container.innerHTML = '';
+
+            for (let i = 0; i < TAM; i++) {
+                for (let j = 0; j < TAM; j++) {
+                    let cell = document.createElement("div");
+                    cell.classList.add("cell");
+                    cell.setAttribute("data-x", i);
+                    cell.setAttribute("data-y", j);
+                    cell.addEventListener("click", (e) => setCell(e));
+                    container.appendChild(cell);
+
+                    if (Math.random() < 0.1) {
+                        grid[i][j] = 1;
+                        cell.classList.add("obstacle");
                     }
                 }
-                
-                return hijo;
             }
-            
-            // Operador de mutación (swap)
-            function mutar(ruta) {
-                const i = getRandomInt(0, ruta.length - 1);
-                const j = getRandomInt(0, ruta.length - 1);
-                [ruta[i], ruta[j]] = [ruta[j], ruta[i]];
-                return ruta;
+        }
+
+        function setCell(e) {
+            const x = e.target.getAttribute("data-x");
+            const y = e.target.getAttribute("data-y");
+
+            if (grid[x][y] === 1) return;
+
+            if (start.x === -1 && start.y === -1) {
+                start = { x: parseInt(x), y: parseInt(y) };
+                e.target.classList.add("start");
+            } else if (goal.x === -1 && goal.y === -1) {
+                goal = { x: parseInt(x), y: parseInt(y) };
+                e.target.classList.add("goal");
             }
-            
-            // Algoritmo genético para TSP
-            let mejorRuta = null;
-            let mejorDistancia = Infinity;
-            let historial = [];
-            
-            // Generar población inicial
-            let poblacionActual = [];
-            for (let i = 0; i < poblacion; i++) {
-                poblacionActual.push(rutaAleatoria());
-            }
-            
-            // Evolucionar
-            for (let gen = 0; gen < generaciones; gen++) {
-                // Evaluar fitness
-                const distancias = poblacionActual.map(ruta => distanciaTotal(ruta));
-                
-                // Encontrar la mejor ruta de esta generación
-                const mejorDistanciaGen = Math.min(...distancias);
-                const mejorRutaGen = poblacionActual[distancias.indexOf(mejorDistanciaGen)];
-                
-                // Actualizar la mejor global
-                if (mejorDistanciaGen < mejorDistancia) {
-                    mejorDistancia = mejorDistanciaGen;
-                    mejorRuta = [...mejorRutaGen];
+        }
+
+        function bfs(start, goal) {
+            let queue = [start];
+            let visited = Array(TAM).fill().map(() => Array(TAM).fill(false));
+            let prev = Array(TAM).fill().map(() => Array(TAM).fill(null));
+
+            visited[start.x][start.y] = true;
+
+            while (queue.length > 0) {
+                let current = queue.shift();
+
+                if (current.x === goal.x && current.y === goal.y) {
+                    let path = [];
+                    let node = current;
+                    while (node) {
+                        path.push(node);
+                        node = prev[node.x][node.y];
+                    }
+                    return path.reverse();
                 }
-                
-                historial.push({
-                    generacion: gen,
-                    mejorDistancia: mejorDistanciaGen
-                });
-                
-                // Selección (torneo)
-                const nuevaPoblacion = [];
-                for (let i = 0; i < poblacion; i++) {
-                    // Seleccionar 2 individuos al azar
-                    const idx1 = getRandomInt(0, poblacion - 1);
-                    const idx2 = getRandomInt(0, poblacion - 1);
-                    
-                    // El mejor de los dos pasa a la siguiente generación
-                    const ganador = distancias[idx1] < distancias[idx2] ? 
-                        [...poblacionActual[idx1]] : [...poblacionActual[idx2]];
-                    nuevaPoblacion.push(ganador);
+
+                for (let move of MOVS) {
+                    let nx = current.x + move[0];
+                    let ny = current.y + move[1];
+
+                    if (nx >= 0 && nx < TAM && ny >= 0 && ny < TAM && !visited[nx][ny] && grid[nx][ny] !== 1) {
+                        visited[nx][ny] = true;
+                        prev[nx][ny] = current;
+                        queue.push({ x: nx, y: ny });
+                    }
                 }
-                
-                // Cruce y mutación
-                poblacionActual = [];
-                for (let i = 0; i < poblacion; i += 2) {
-                    if (i + 1 < poblacion) {
-                        const hijo1 = cruzar(nuevaPoblacion[i], nuevaPoblacion[i+1]);
-                        const hijo2 = cruzar(nuevaPoblacion[i+1], nuevaPoblacion[i]);
-                        
-                        // Mutar con cierta probabilidad
-                        if (Math.random() < 0.1) mutar(hijo1);
-                        if (Math.random() < 0.1) mutar(hijo2);
-                        
-                        poblacionActual.push(hijo1, hijo2);
+            }
+
+            return [];
+        }
+
+        function dfs(start, goal) {
+            let stack = [start];
+            let visited = Array(TAM).fill().map(() => Array(TAM).fill(false));
+            let prev = Array(TAM).fill().map(() => Array(TAM).fill(null));
+
+            visited[start.x][start.y] = true;
+
+            while (stack.length > 0) {
+                let current = stack.pop();
+
+                if (current.x === goal.x && current.y === goal.y) {
+                    let path = [];
+                    let node = current;
+                    while (node) {
+                        path.push(node);
+                        node = prev[node.x][node.y];
+                    }
+                    return path.reverse();
+                }
+
+                for (let move of MOVS) {
+                    let nx = current.x + move[0];
+                    let ny = current.y + move[1];
+
+                    if (nx >= 0 && nx < TAM && ny >= 0 && ny < TAM && !visited[nx][ny] && grid[nx][ny] !== 1) {
+                        visited[nx][ny] = true;
+                        prev[nx][ny] = current;
+                        stack.push({ x: nx, y: ny });
+                    }
+                }
+            }
+
+            return [];
+        }
+
+        function renderPath(path) {
+            if (path.length === 0) {
+                alert("No se encontró un camino.");
+                return;
+            }
+
+            const cells = document.querySelectorAll(".cell");
+            cells.forEach(cell => cell.classList.remove("visited", "path"));
+
+            path.forEach(cell => {
+                let element = document.querySelector(`.cell[data-x='${cell.x}'][data-y='${cell.y}']`);
+                if (element) element.classList.add("path");
+            });
+        }
+
+        function runBFS() {
+            if (start.x === -1 || goal.x === -1) {
+                alert("Por favor, seleccione un punto de inicio y un punto de llegada.");
+                return;
+            }
+            let path = bfs(start, goal);
+            renderPath(path);
+        }
+
+        function runDFS() {
+            if (start.x === -1 || goal.x === -1) {
+                alert("Por favor, seleccione un punto de inicio y un punto de llegada.");
+                return;
+            }
+            let path = dfs(start, goal);
+            renderPath(path);
+        }
+
+        function resetGrid() {
+            start = { x: -1, y: -1 };
+            goal = { x: -1, y: -1 };
+            grid = Array(TAM).fill().map(() => Array(TAM).fill(0));
+            initGrid();
+        }
+
+        // =============================================
+        // Punto 5: DFS con Obstáculos Automáticos
+        // =============================================
+        let autoGrid = Array(TAM).fill().map(() => Array(TAM).fill(0));
+        let autoStart = null;
+        let autoGoal = null;
+        let obstacleDensity = 0.3;
+
+        function updateDensity(value) {
+            document.getElementById('density-value').textContent = value;
+            obstacleDensity = value / 100;
+        }
+
+        function initAutoGrid() {
+            const container = document.getElementById("auto-grid-container");
+            container.innerHTML = '';
+            
+            autoGrid = Array(TAM).fill().map(() => Array(TAM).fill(0));
+            autoStart = null;
+            autoGoal = null;
+            
+            for (let i = 0; i < TAM; i++) {
+                for (let j = 0; j < TAM; j++) {
+                    let cell = document.createElement("div");
+                    cell.classList.add("cell");
+                    cell.setAttribute("data-x", i);
+                    cell.setAttribute("data-y", j);
+                    cell.addEventListener("click", () => setAutoCell(i, j));
+                    container.appendChild(cell);
+                }
+            }
+            
+            generateObstacles();
+        }
+
+        function generateObstacles() {
+            for (let i = 0; i < TAM; i++) {
+                for (let j = 0; j < TAM; j++) {
+                    if (Math.random() < obstacleDensity) {
+                        autoGrid[i][j] = 1;
+                        const cell = document.querySelector(`#auto-grid-container .cell[data-x='${i}'][data-y='${j}']`);
+                        if (cell) cell.classList.add("obstacle");
                     } else {
-                        poblacionActual.push(nuevaPoblacion[i]);
+                        autoGrid[i][j] = 0;
                     }
                 }
             }
-            
-            // Mostrar resultados
-            document.getElementById('resultado-tsp').innerHTML = `
-                Mejor ruta encontrada con distancia total: ${mejorDistancia.toFixed(2)}<br>
-                Ruta: ${mejorRuta.map(ciudad => ciudad.id).join(' → ')} → ${mejorRuta[0].id}
-            `;
-            
-            // Crear gráfico de la ruta
-            const x = [...mejorRuta.map(ciudad => ciudad.x), mejorRuta[0].x];
-            const y = [...mejorRuta.map(ciudad => ciudad.y), mejorRuta[0].y];
-            
-            const trace = {
-                x: x,
-                y: y,
-                type: 'scatter',
-                mode: 'lines+markers+text',
-                text: [...mejorRuta.map(ciudad => ciudad.id), mejorRuta[0].id],
-                textposition: 'top center',
-                name: 'Ruta'
-            };
-            
-            const layout = {
-                title: 'Mejor Ruta Encontrada',
-                xaxis: { title: 'Coordenada X' },
-                yaxis: { title: 'Coordenada Y' },
-                showlegend: false
-            };
-            
-            Plotly.newPlot('grafico-tsp', [trace], layout);
-            
-            // Crear gráfico de evolución
-            const generacionesData = historial.map(item => item.generacion);
-            const distanciasData = historial.map(item => item.mejorDistancia);
-            
-            const traceEvolucion = {
-                x: generacionesData,
-                y: distanciasData,
-                type: 'scatter',
-                mode: 'lines+markers',
-                name: 'Mejor Distancia'
-            };
-            
-            const layoutEvolucion = {
-                title: 'Evolución de la Distancia',
-                xaxis: { title: 'Generación' },
-                yaxis: { title: 'Distancia' }
-            };
-            
-            // Si ya existe un gráfico en el contenedor, actualizarlo
-            if (document.getElementById('grafico-tsp').data) {
-                Plotly.react('grafico-tsp', [trace, traceEvolucion], layout);
-            } else {
-                Plotly.newPlot('grafico-tsp', [trace, traceEvolucion], layout);
-            }
-        });
-
-       // Función auxiliar para obtener un número aleatorio en un rango
-function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-// Función auxiliar para obtener un número aleatorio decimal en un rango
-function getRandomFloat(min, max) {
-    return Math.random() * (max - min) + min;
-}
-
-// Función para crear un gráfico con Plotly
-function crearGrafico(contenedorId, titulo, historial, ejeY = 'Fitness') {
-    const generaciones = historial.map(item => item.generacion);
-    const valores = historial.map(item => item.mejorPerdida || item.mejorFitness);
-    
-    const trace = {
-        x: generaciones,
-        y: valores,
-        type: 'scatter',
-        mode: 'lines+markers',
-        name: 'Mejor ' + ejeY
-    };
-    
-    const layout = {
-        title: titulo,
-        xaxis: { title: 'Generación' },
-        yaxis: { title: ejeY }
-    };
-    
-    Plotly.newPlot(contenedorId, [trace], layout);
-}
-
-// Ejercicio 7: Optimización del Diseño de un Puente
-document.getElementById('ejecutar-puente').addEventListener('click', function() {
-    const pobPuente = parseInt(document.getElementById('pob-puente').value);
-    const genPuente = parseInt(document.getElementById('gen-puente').value);
-    const mutPuente = parseFloat(document.getElementById('mut-puente').value);
-
-    // Función para simular resistencia del puente (simplificada)
-    function calcularResistencia(diseño) {
-        // diseño es un array con parámetros de construcción [material, espesor, longitud, soportes]
-        const [material, espesor, longitud, soportes] = diseño;
-        return (material * espesor * soportes) / longitud;
-    }
-
-    // Función para calcular peso (simplificada)
-    function calcularPeso(diseño) {
-        const [material, espesor, longitud, soportes] = diseño;
-        return espesor * longitud * soportes;
-    }
-
-    // Función de fitness (minimizar peso manteniendo resistencia mínima)
-    function fitnessPuente(diseño) {
-        const resistencia = calcularResistencia(diseño);
-        const peso = calcularPeso(diseño);
-        
-        // Penalizar si no cumple con resistencia mínima
-        if (resistencia < 10) return 1000 + (10 - resistencia) * 100;
-        return peso;
-    }
-
-    // Generar diseño aleatorio
-    function diseñoAleatorio() {
-        return [
-            getRandomFloat(0.5, 2.0),  // material (factor de calidad)
-            getRandomFloat(0.1, 1.0),  // espesor (metros)
-            getRandomFloat(10, 100),   // longitud (metros)
-            getRandomInt(2, 10)        // número de soportes
-        ];
-    }
-
-    // Operador de cruce
-    function cruzarDiseños(dis1, dis2) {
-        const punto = getRandomInt(1, 3);
-        return [
-            ...dis1.slice(0, punto),
-            ...dis2.slice(punto)
-        ];
-    }
-
-    // Operador de mutación
-    function mutarDiseño(diseño) {
-        const idx = getRandomInt(0, 3);
-        if (idx === 0) diseño[idx] = getRandomFloat(0.5, 2.0);
-        if (idx === 1) diseño[idx] = getRandomFloat(0.1, 1.0);
-        if (idx === 2) diseño[idx] = getRandomFloat(10, 100);
-        if (idx === 3) diseño[idx] = getRandomInt(2, 10);
-        return diseño;
-    }
-
-    // Algoritmo genético
-    let mejorDiseño = null;
-    let mejorFitness = Infinity;
-    let historial = [];
-
-    // Población inicial
-    let poblacion = [];
-    for (let i = 0; i < pobPuente; i++) {
-        poblacion.push(diseñoAleatorio());
-    }
-
-    // Evolución
-    for (let gen = 0; gen < genPuente; gen++) {
-        // Evaluar fitness
-        const fitness = poblacion.map(d => fitnessPuente(d));
-        
-        // Encontrar el mejor diseño de esta generación
-        const mejorFitnessGen = Math.min(...fitness);
-        const mejorDiseñoGen = poblacion[fitness.indexOf(mejorFitnessGen)];
-        
-        // Actualizar el mejor global
-        if (mejorFitnessGen < mejorFitness) {
-            mejorFitness = mejorFitnessGen;
-            mejorDiseño = [...mejorDiseñoGen];
         }
-        
-        historial.push({
-            generacion: gen,
-            mejorFitness: mejorFitnessGen,
-            resistencia: calcularResistencia(mejorDiseñoGen),
-            peso: calcularPeso(mejorDiseñoGen)
-        });
-        
-        // Selección (torneo)
-        const nuevaPoblacion = [];
-        for (let i = 0; i < pobPuente; i++) {
-            const idx1 = getRandomInt(0, pobPuente - 1);
-            const idx2 = getRandomInt(0, pobPuente - 1);
+
+        function setAutoCell(x, y) {
+            const cell = document.querySelector(`#auto-grid-container .cell[data-x='${x}'][data-y='${y}']`);
             
-            const ganador = fitness[idx1] < fitness[idx2] ? 
-                [...poblacion[idx1]] : [...poblacion[idx2]];
-            nuevaPoblacion.push(ganador);
-        }
-        
-        // Cruce y mutación
-        poblacion = [];
-        for (let i = 0; i < pobPuente; i += 2) {
-            if (i + 1 < pobPuente) {
-                const hijo1 = cruzarDiseños(nuevaPoblacion[i], nuevaPoblacion[i+1]);
-                const hijo2 = cruzarDiseños(nuevaPoblacion[i+1], nuevaPoblacion[i]);
-                
-                if (Math.random() < mutPuente) mutarDiseño(hijo1);
-                if (Math.random() < mutPuente) mutarDiseño(hijo2);
-                
-                poblacion.push(hijo1, hijo2);
-            } else {
-                poblacion.push(nuevaPoblacion[i]);
+            if (autoGrid[x][y] === 1) return;
+            
+            if (!autoStart) {
+                autoStart = { x, y };
+                cell.classList.add("start");
+            } else if (!autoGoal && !(x === autoStart.x && y === autoStart.y)) {
+                autoGoal = { x, y };
+                cell.classList.add("goal");
             }
         }
-    }
 
-    // Mostrar resultados
-    document.getElementById('resultado-puente').innerHTML = `
-        <strong>Mejor diseño encontrado:</strong><br>
-        - Material: ${mejorDiseño[0].toFixed(2)}<br>
-        - Espesor: ${mejorDiseño[1].toFixed(2)} metros<br>
-        - Longitud: ${mejorDiseño[2].toFixed(2)} metros<br>
-        - Soportes: ${mejorDiseño[3]}<br>
-        <strong>Peso total:</strong> ${calcularPeso(mejorDiseño).toFixed(2)} toneladas<br>
-        <strong>Resistencia:</strong> ${calcularResistencia(mejorDiseño).toFixed(2)}
-    `;
+        function autoDFS(start, goal) {
+            let stack = [start];
+            let visited = Array(TAM).fill().map(() => Array(TAM).fill(false));
+            let prev = Array(TAM).fill().map(() => Array(TAM).fill(null));
 
-    // Crear gráfico de evolución
-    crearGrafico('grafico-puente', 'Evolución del Fitness (Diseño de Puente)', historial, 'Peso (ton)');
-});
+            visited[start.x][start.y] = true;
 
-// Ejercicio 8: Asignación de Recursos en una Empresa (Versión corregida)
-document.getElementById('ejecutar-asignacion').addEventListener('click', function() {
-    const numTareas = parseInt(document.getElementById('num-tareas').value);
-    const numRecursos = parseInt(document.getElementById('num-recursos').value);
-    const pobAsignacion = parseInt(document.getElementById('pob-asignacion').value);
+            while (stack.length > 0) {
+                let current = stack.pop();
 
-    // Generar tiempos aleatorios para cada tarea-recurso
-    const tiempos = [];
-    for (let t = 0; t < numTareas; t++) {
-        const tarea = [];
-        for (let r = 0; r < numRecursos; r++) {
-            tarea.push(getRandomInt(1, 10)); // Tiempo entre 1 y 10 horas
-        }
-        tiempos.push(tarea);
-    }
+                if (current.x === goal.x && current.y === goal.y) {
+                    let path = [];
+                    let node = current;
+                    while (node) {
+                        path.push(node);
+                        node = prev[node.x][node.y];
+                    }
+                    return path.reverse();
+                }
 
-    // Función para calcular tiempo total de una asignación
-    function calcularTiempoTotal(asignacion) {
-        const tiemposRecursos = new Array(numRecursos).fill(0);
-        
-        for (let t = 0; t < numTareas; t++) {
-            const recurso = asignacion[t];
-            tiemposRecursos[recurso] += tiempos[t][recurso];
-        }
-        
-        return Math.max(...tiemposRecursos); // Tiempo del recurso más cargado
-    }
+                const shuffledMoves = MOVS.sort(() => Math.random() - 0.5);
+                for (let move of shuffledMoves) {
+                    let nx = current.x + move[0];
+                    let ny = current.y + move[1];
 
-    // Generar asignación aleatoria
-    function asignacionAleatoria() {
-        const asignacion = [];
-        for (let t = 0; t < numTareas; t++) {
-            asignacion.push(getRandomInt(0, numRecursos - 1));
-        }
-        return asignacion;
-    }
-
-    // Operador de cruce
-    function cruzarAsignaciones(asig1, asig2) {
-        const punto = getRandomInt(1, numTareas - 2);
-        return [
-            ...asig1.slice(0, punto),
-            ...asig2.slice(punto)
-        ];
-    }
-
-    // Operador de mutación
-    function mutarAsignacion(asignacion) {
-        const idx = getRandomInt(0, numTareas - 1);
-        asignacion[idx] = getRandomInt(0, numRecursos - 1);
-        return asignacion;
-    }
-
-    // Algoritmo genético
-    let mejorAsignacion = null;
-    let mejorTiempo = Infinity;
-    let historial = [];
-
-    // Población inicial
-    let poblacion = [];
-    for (let i = 0; i < pobAsignacion; i++) {
-        poblacion.push(asignacionAleatoria());
-    }
-
-    // Evolución
-    for (let gen = 0; gen < 100; gen++) { // Generaciones fijas
-        // Evaluar fitness
-        const tiemposPob = poblacion.map(asig => calcularTiempoTotal(asig));
-        
-        // Encontrar la mejor asignación de esta generación
-        const mejorTiempoGen = Math.min(...tiemposPob);
-        const mejorAsignacionGen = poblacion[tiemposPob.indexOf(mejorTiempoGen)];
-        
-        // Actualizar la mejor global
-        if (mejorTiempoGen < mejorTiempo) {
-            mejorTiempo = mejorTiempoGen;
-            mejorAsignacion = [...mejorAsignacionGen];
-        }
-        
-        historial.push({
-            generacion: gen,
-            mejorFitness: mejorTiempoGen // Cambiado a mejorFitness para compatibilidad con crearGrafico
-        });
-        
-        // Selección (torneo)
-        const nuevaPoblacion = [];
-        for (let i = 0; i < pobAsignacion; i++) {
-            const idx1 = getRandomInt(0, pobAsignacion - 1);
-            const idx2 = getRandomInt(0, pobAsignacion - 1);
-            
-            const ganador = tiemposPob[idx1] < tiemposPob[idx2] ? 
-                [...poblacion[idx1]] : [...poblacion[idx2]];
-            nuevaPoblacion.push(ganador);
-        }
-        
-        // Cruce y mutación
-        poblacion = [];
-        for (let i = 0; i < pobAsignacion; i += 2) {
-            if (i + 1 < pobAsignacion) {
-                const hijo1 = cruzarAsignaciones(nuevaPoblacion[i], nuevaPoblacion[i+1]);
-                const hijo2 = cruzarAsignaciones(nuevaPoblacion[i+1], nuevaPoblacion[i]);
-                
-                if (Math.random() < 0.1) mutarAsignacion(hijo1);
-                if (Math.random() < 0.1) mutarAsignacion(hijo2);
-                
-                poblacion.push(hijo1, hijo2);
-            } else {
-                poblacion.push(nuevaPoblacion[i]);
-            }
-        }
-    }
-
-    // Mostrar resultados
-    let resultadoHTML = `<strong>Mejor asignación encontrada:</strong><br>`;
-    resultadoHTML += `Tiempo total mínimo: ${mejorTiempo} horas<br><br>`;
-    
-    // Crear tabla de asignación
-    let tablaHTML = '<table class="table"><thead><tr><th>Tarea</th>';
-    for (let r = 0; r < numRecursos; r++) {
-        tablaHTML += `<th>Recurso ${r+1}</th>`;
-    }
-    tablaHTML += '<th>Asignado a</th></tr></thead><tbody>';
-    
-    for (let t = 0; t < numTareas; t++) {
-        tablaHTML += `<tr><td>Tarea ${t+1}</td>`;
-        for (let r = 0; r < numRecursos; r++) {
-            const tiempo = tiempos[t][r];
-            const resaltar = mejorAsignacion[t] === r ? 'style="background-color: #d4edda"' : '';
-            tablaHTML += `<td ${resaltar}>${tiempo}h</td>`;
-        }
-        tablaHTML += `<td>Recurso ${mejorAsignacion[t]+1}</td></tr>`;
-    }
-    tablaHTML += '</tbody></table>';
-    
-    document.getElementById('resultado-asignacion').innerHTML = resultadoHTML;
-    document.getElementById('tabla-asignacion').innerHTML = tablaHTML;
-    
-    // Crear gráfico de evolución - VERSIÓN CORREGIDA
-    const generaciones = historial.map(item => item.generacion);
-    const fitness = historial.map(item => item.mejorFitness);
-    
-    const trace = {
-        x: generaciones,
-        y: fitness,
-        type: 'scatter',
-        mode: 'lines+markers',
-        name: 'Tiempo Total'
-    };
-    
-    const layout = {
-        title: 'Evolución del Tiempo Total',
-        xaxis: { title: 'Generación' },
-        yaxis: { title: 'Tiempo (horas)' }
-    };
-    
-    Plotly.newPlot('grafico-asignacion', [trace], layout);
-});
-
-// Ejercicio 9: Selección de Características en ML
-document.getElementById('ejecutar-caracteristicas').addEventListener('click', function() {
-    const dataset = document.getElementById('dataset').value;
-    const pobCaracteristicas = parseInt(document.getElementById('pob-caracteristicas').value);
-    const genCaracteristicas = parseInt(document.getElementById('gen-caracteristicas').value);
-
-    // Datasets simulados (en un caso real, se cargarían datos reales)
-    const datasets = {
-        iris: {
-            nombre: "Iris",
-            caracteristicas: ["Longitud sépalo", "Ancho sépalo", "Longitud pétalo", "Ancho pétalo"],
-            importanciaReal: [0.8, 0.6, 0.9, 0.7] // Simulamos importancia conocida
-        },
-        wine: {
-            nombre: "Wine",
-            caracteristicas: ["Alcohol", "Ácido málico", "Ceniza", "Alcalinidad", "Magnesio", 
-                             "Fenoles totales", "Flavonoides", "Fenoles no flavonoides", 
-                             "Proantocianinas", "Intensidad color", "Tono", "OD280/OD315", "Prolina"],
-            importanciaReal: [0.7, 0.5, 0.3, 0.6, 0.4, 0.8, 0.9, 0.2, 0.5, 0.6, 0.4, 0.7, 0.8]
-        },
-        breast_cancer: {
-            nombre: "Breast Cancer",
-            caracteristicas: ["Radio", "Textura", "Perímetro", "Área", "Suavidad", 
-                            "Compacidad", "Concavidad", "Puntos cóncavos", "Simetría", 
-                            "Dimensión fractal"],
-            importanciaReal: [0.9, 0.7, 0.8, 0.85, 0.6, 0.75, 0.8, 0.7, 0.5, 0.4]
-        }
-    };
-
-    const data = datasets[dataset];
-    const numCaracteristicas = data.caracteristicas.length;
-
-    // Función para evaluar un subconjunto de características (simulada)
-    function evaluarSubconjunto(subconjunto) {
-        let score = 0;
-        let numSeleccionadas = 0;
-        
-        for (let i = 0; i < subconjunto.length; i++) {
-            if (subconjunto[i]) {
-                score += data.importanciaReal[i];
-                numSeleccionadas++;
-            }
-        }
-        
-        // Penalizar por usar muchas características
-        return score - (numSeleccionadas * 0.1);
-    }
-
-    // Generar individuo aleatorio
-    function individuoAleatorio() {
-        const individuo = [];
-        for (let i = 0; i < numCaracteristicas; i++) {
-            individuo.push(Math.random() > 0.7); // 30% de probabilidad de seleccionar cada característica
-        }
-        return individuo;
-    }
-
-    // Operador de cruce (uniforme)
-    function cruzarIndividuos(ind1, ind2) {
-        const hijo = [];
-        for (let i = 0; i < numCaracteristicas; i++) {
-            hijo.push(Math.random() > 0.5 ? ind1[i] : ind2[i]);
-        }
-        return hijo;
-    }
-
-    // Operador de mutación (flip bit)
-    function mutarIndividuo(individuo) {
-        const idx = getRandomInt(0, numCaracteristicas - 1);
-        individuo[idx] = !individuo[idx];
-        return individuo;
-    }
-
-    // Algoritmo genético
-    let mejorIndividuo = null;
-    let mejorScore = -Infinity;
-    let historial = [];
-
-    // Población inicial
-    let poblacion = [];
-    for (let i = 0; i < pobCaracteristicas; i++) {
-        poblacion.push(individuoAleatorio());
-    }
-
-    // Evolución
-    for (let gen = 0; gen < genCaracteristicas; gen++) {
-        // Evaluar fitness
-        const scores = poblacion.map(ind => evaluarSubconjunto(ind));
-        
-        // Encontrar el mejor individuo de esta generación
-        const mejorScoreGen = Math.max(...scores);
-        const mejorIndividuoGen = poblacion[scores.indexOf(mejorScoreGen)];
-        
-        // Actualizar el mejor global
-        if (mejorScoreGen > mejorScore) {
-            mejorScore = mejorScoreGen;
-            mejorIndividuo = [...mejorIndividuoGen];
-        }
-        
-        historial.push({
-            generacion: gen,
-            mejorScore: mejorScoreGen,
-            numCaracteristicas: mejorIndividuoGen.filter(x => x).length
-        });
-        
-        // Selección (ruleta)
-        const nuevaPoblacion = [];
-        const totalScore = scores.reduce((a, b) => a + b, 0);
-        
-        for (let i = 0; i < pobCaracteristicas; i++) {
-            let acumulado = 0;
-            const random = Math.random() * totalScore;
-            
-            for (let j = 0; j < pobCaracteristicas; j++) {
-                acumulado += scores[j];
-                if (acumulado >= random) {
-                    nuevaPoblacion.push([...poblacion[j]]);
-                    break;
+                    if (nx >= 0 && nx < TAM && ny >= 0 && ny < TAM && 
+                        !visited[nx][ny] && autoGrid[nx][ny] !== 1) {
+                        visited[nx][ny] = true;
+                        prev[nx][ny] = current;
+                        stack.push({ x: nx, y: ny });
+                    }
                 }
             }
+
+            return [];
         }
-        
-        // Cruce y mutación
-        poblacion = [];
-        for (let i = 0; i < pobCaracteristicas; i += 2) {
-            if (i + 1 < pobCaracteristicas) {
-                const hijo1 = cruzarIndividuos(nuevaPoblacion[i], nuevaPoblacion[i+1]);
-                const hijo2 = cruzarIndividuos(nuevaPoblacion[i+1], nuevaPoblacion[i]);
-                
-                if (Math.random() < 0.1) mutarIndividuo(hijo1);
-                if (Math.random() < 0.1) mutarIndividuo(hijo2);
-                
-                poblacion.push(hijo1, hijo2);
-            } else {
-                poblacion.push(nuevaPoblacion[i]);
+
+        function renderAutoPath(path) {
+            const cells = document.querySelectorAll("#auto-grid-container .cell");
+            cells.forEach(cell => cell.classList.remove("path", "visited"));
+
+            if (path.length === 0) {
+                alert("No se encontró un camino válido!");
+                return;
+            }
+
+            for (let i = 1; i < path.length - 1; i++) {
+                const {x, y} = path[i];
+                const cell = document.querySelector(`#auto-grid-container .cell[data-x='${x}'][data-y='${y}']`);
+                if (cell) cell.classList.add("path");
             }
         }
-    }
 
-    // Mostrar resultados
-    let resultadoHTML = `<strong>Mejor subconjunto de características para ${data.nombre}:</strong><br><ul>`;
-    const caracteristicasSeleccionadas = [];
-    
-    for (let i = 0; i < mejorIndividuo.length; i++) {
-        if (mejorIndividuo[i]) {
-            resultadoHTML += `<li>${data.caracteristicas[i]}</li>`;
-            caracteristicasSeleccionadas.push(data.caracteristicas[i]);
+        function runAutoDFS() {
+            if (!autoStart || !autoGoal) {
+                alert("Debes establecer tanto el punto de inicio como el de llegada!");
+                return;
+            }
+            let path = autoDFS(autoStart, autoGoal);
+            renderAutoPath(path);
         }
-    }
-    
-    resultadoHTML += `</ul><strong>Número de características seleccionadas:</strong> ${caracteristicasSeleccionadas.length}`;
-    document.getElementById('resultado-caracteristicas').innerHTML = resultadoHTML;
-    
-    // Crear gráfico de evolución
-    const trace1 = {
-        x: historial.map(h => h.generacion),
-        y: historial.map(h => h.mejorScore),
-        name: 'Score',
-        yaxis: 'y1',
-        type: 'scatter',
-        mode: 'lines+markers'
-    };
-    
-    const trace2 = {
-        x: historial.map(h => h.generacion),
-        y: historial.map(h => h.numCaracteristicas),
-        name: 'Núm. Características',
-        yaxis: 'y2',
-        type: 'scatter',
-        mode: 'lines+markers'
-    };
-    
-    const layout = {
-        title: 'Evolución de la Selección de Características',
-        xaxis: { title: 'Generación' },
-        yaxis: { title: 'Score', side: 'left' },
-        yaxis2: { title: 'Núm. Características', overlaying: 'y', side: 'right' }
-    };
-    
-    Plotly.newPlot('grafico-caracteristicas', [trace1, trace2], layout);
-});
 
-// Ejercicio 10: Optimización de Red Eléctrica
-document.getElementById('ejecutar-red').addEventListener('click', function() {
-    const numNodos = parseInt(document.getElementById('num-nodos').value);
-    const pobRed = parseInt(document.getElementById('pob-red').value);
-    const genRed = parseInt(document.getElementById('gen-red').value);
-    
-    // Función de fitness ficticia (simula pérdidas en la red)
-    function calcularPerdidas(configuracion) {
-        let perdidas = 0;
-        for (let i = 0; i < configuracion.length; i++) {
-            perdidas += Math.abs(configuracion[i] - i) / (i + 1);
+        function resetAutoGrid() {
+            initAutoGrid();
         }
-        return perdidas;
-    }
-    
-    // Generar una configuración aleatoria
-    function configuracionAleatoria() {
-        const config = [];
-        for (let i = 0; i < numNodos; i++) {
-            config.push(getRandomFloat(0, numNodos));
+
+        // =============================================
+        // Punto 6: Simulador de Stack
+        // =============================================
+        let stack = [];
+
+        function pushStack() {
+            let elemento = document.getElementById("stackInput").value.trim();
+            if (elemento) {
+                stack.push(elemento);
+                document.getElementById("stackInput").value = "";
+                showStack();
+            }
         }
-        return config;
-    }
-    
-    // Operador de cruce
-    function cruzarConfiguraciones(conf1, conf2) {
-        const puntoCruce = getRandomInt(1, numNodos - 2);
-        const hijo = [
-            ...conf1.slice(0, puntoCruce),
-            ...conf2.slice(puntoCruce)
-        ];
-        return hijo;
-    }
-    
-    // Operador de mutación
-    function mutarConfiguracion(config) {
-        const idx = getRandomInt(0, numNodos - 1);
-        config[idx] = getRandomFloat(0, numNodos);
-        return config;
-    }
-    
-    // Algoritmo genético
-    let mejorConfiguracion = null;
-    let mejorPerdida = Infinity;
-    let historial = [];
-    
-    // Población inicial
-    let poblacion = [];
-    for (let i = 0; i < pobRed; i++) {
-        poblacion.push(configuracionAleatoria());
-    }
-    
-    // Evolución
-    for (let gen = 0; gen < genRed; gen++) {
-        // Evaluar fitness
-        const perdidas = poblacion.map(conf => calcularPerdidas(conf));
-        
-        // Encontrar la mejor configuración de esta generación
-        const mejorPerdidaGen = Math.min(...perdidas);
-        const mejorConfiguracionGen = poblacion[perdidas.indexOf(mejorPerdidaGen)];
-        
-        // Actualizar la mejor global
-        if (mejorPerdidaGen < mejorPerdida) {
-            mejorPerdida = mejorPerdidaGen;
-            mejorConfiguracion = [...mejorConfiguracionGen];
+
+        function popStack() {
+            if (stack.length > 0) {
+                let elemento = stack.pop();
+                alert(`Elemento removido: ${elemento}`);
+            } else {
+                alert("El stack está vacío.");
+            }
+            showStack();
         }
-        
-        historial.push({
-            generacion: gen,
-            mejorPerdida: mejorPerdidaGen
-        });
-        
-        // Selección (torneo)
-        const nuevaPoblacion = [];
-        for (let i = 0; i < pobRed; i++) {
-            const idx1 = getRandomInt(0, pobRed - 1);
-            const idx2 = getRandomInt(0, pobRed - 1);
+
+        function showStack() {
+            let stackArea = document.getElementById("stackArea");
+            stackArea.value = "Stack:\n";
+            if (stack.length > 0) {
+                for (let i = stack.length - 1; i >= 0; i--) {
+                    stackArea.value += "- " + stack[i] + "\n";
+                }
+            } else {
+                stackArea.value += "El stack está vacío.";
+            }
+        }
+
+        // =============================================
+        // Punto 7: Simulador de Queue
+        // =============================================
+        let queue = [];
+
+        function enqueue() {
+            let element = document.getElementById("queueInput").value.trim();
+            if (element) {
+                queue.push(element);
+                document.getElementById("queueInput").value = "";
+                showQueue();
+            }
+        }
+
+        function dequeue() {
+            if (queue.length > 0) {
+                let removed = queue.shift();
+                alert(`Paciente eliminado: ${removed}`);
+                showQueue();
+            } else {
+                alert("La cola está vacía.");
+            }
+        }
+
+        function showQueue() {
+            let queueArea = document.getElementById("queueArea");
+            queueArea.value = "Cola:\n";
+            if (queue.length > 0) {
+                queue.forEach((element, index) => {
+                    queueArea.value += (index + 1) + ". " + element + "\n";
+                });
+            } else {
+                queueArea.value += "La cola está vacía.";
+            }
+        }
+
+        // =============================================
+        // Punto 8: Árbol Binario de Búsqueda
+        // =============================================
+        class NodoArbol {
+            constructor(valor) {
+                this.valor = valor;
+                this.izquierda = null;
+                this.derecha = null;
+            }
+        }
+
+        let raizArbol = null;
+
+        function insertarEnArbol() {
+            let valor = parseInt(document.getElementById("arbolValor").value);
+            if (isNaN(valor)) {
+                alert("Por favor ingrese un número válido.");
+                return;
+            }
+
+            raizArbol = insertarNodo(raizArbol, valor);
+            document.getElementById("arbolValor").value = "";
+            mostrarArbol();
+        }
+
+        function insertarNodo(nodo, valor) {
+            if (nodo === null) {
+                return new NodoArbol(valor);
+            }
+
+            if (valor < nodo.valor) {
+                nodo.izquierda = insertarNodo(nodo.izquierda, valor);
+            } else if (valor > nodo.valor) {
+                nodo.derecha = insertarNodo(nodo.derecha, valor);
+            }
+
+            return nodo;
+        }
+
+        function buscarEnArbol() {
+            let valor = parseInt(document.getElementById("arbolValor").value);
+            if (isNaN(valor)) {
+                alert("Por favor ingrese un número válido.");
+                return;
+            }
+
+            let encontrado = buscarNodo(raizArbol, valor);
+            alert(encontrado ? `El valor ${valor} está en el árbol.` : `El valor ${valor} no está en el árbol.`);
+        }
+
+        function buscarNodo(nodo, valor) {
+            if (nodo === null) {
+                return false;
+            }
+
+            if (valor === nodo.valor) {
+                return true;
+            }
+
+            return valor < nodo.valor 
+                ? buscarNodo(nodo.izquierda, valor) 
+                : buscarNodo(nodo.derecha, valor);
+        }
+
+        function mostrarArbol() {
+            let area = document.getElementById("arbolArea");
+            area.value = "Árbol Binario de Búsqueda (In-Order):\n";
             
-            const ganador = perdidas[idx1] < perdidas[idx2] ? 
-                [...poblacion[idx1]] : [...poblacion[idx2]];
-            nuevaPoblacion.push(ganador);
+            if (raizArbol === null) {
+                area.value += "El árbol está vacío.";
+                return;
+            }
+
+            let elementos = [];
+            inOrder(raizArbol, elementos);
+            area.value += elementos.join(", ");
+            
+            visualizarArbol();
         }
-        
-        // Cruce y mutación
-        poblacion = [];
-        for (let i = 0; i < pobRed; i += 2) {
-            if (i + 1 < pobRed) {
-                const hijo1 = cruzarConfiguraciones(nuevaPoblacion[i], nuevaPoblacion[i+1]);
-                const hijo2 = cruzarConfiguraciones(nuevaPoblacion[i+1], nuevaPoblacion[i]);
-                
-                if (Math.random() < 0.1) mutarConfiguracion(hijo1);
-                if (Math.random() < 0.1) mutarConfiguracion(hijo2);
-                
-                poblacion.push(hijo1, hijo2);
-            } else {
-                poblacion.push(nuevaPoblacion[i]);
+
+        function inOrder(nodo, elementos) {
+            if (nodo !== null) {
+                inOrder(nodo.izquierda, elementos);
+                elementos.push(nodo.valor);
+                inOrder(nodo.derecha, elementos);
             }
         }
-    }
-    
-    // Mostrar resultados
-    document.getElementById('resultado-red').innerHTML = `
-        <strong>Mejor configuración encontrada:</strong><br>
-        ${mejorConfiguracion.map((val, idx) => `Nodo ${idx}: ${val.toFixed(2)}`).join('<br>')}<br>
-        <strong>Pérdidas estimadas:</strong> ${mejorPerdida.toFixed(4)}
-    `;
-    
-    // Crear gráfico de evolución
-    crearGrafico('grafico-red', 'Evolución de las Pérdidas en la Red', historial, 'Pérdidas');
-});
 
-        
+        function visualizarArbol() {
+            const container = document.getElementById("arbolVisual");
+            container.innerHTML = '';
+            
+            if (raizArbol === null) {
+                container.innerHTML = "<p>El árbol está vacío.</p>";
+                return;
+            }
+            
+            let queue = [{nodo: raizArbol, nivel: 0}];
+            let niveles = [];
+            
+            while (queue.length > 0) {
+                let current = queue.shift();
+                if (!niveles[current.nivel]) {
+                    niveles[current.nivel] = [];
+                }
+                niveles[current.nivel].push(current.nodo);
+                
+                if (current.nodo.izquierda) {
+                    queue.push({nodo: current.nodo.izquierda, nivel: current.nivel + 1});
+                }
+                if (current.nodo.derecha) {
+                    queue.push({nodo: current.nodo.derecha, nivel: current.nivel + 1});
+                }
+            }
+            
+            for (let i = 0; i < niveles.length; i++) {
+                let nivelDiv = document.createElement("div");
+                nivelDiv.style.textAlign = "center";
+                nivelDiv.style.margin = "10px 0";
+                
+                for (let j = 0; j < niveles[i].length; j++) {
+                    let nodoDiv = document.createElement("span");
+                    nodoDiv.className = "tree-node";
+                    nodoDiv.textContent = niveles[i][j].valor;
+                    nivelDiv.appendChild(nodoDiv);
+                    
+                    if (i < niveles.length - 1) {
+                        let lineDiv = document.createElement("span");
+                        lineDiv.className = "tree-line";
+                        nivelDiv.appendChild(lineDiv);
+                    }
+                }
+                
+                container.appendChild(nivelDiv);
+            }
+        }
+
+        // =============================================
+        // Punto 9: Cálculo de Profundidad de Árbol
+        // =============================================
+        function calcularProfundidad() {
+            let profundidad = obtenerProfundidad(raizArbol);
+            
+            if (raizArbol === null) {
+                document.getElementById("profundidadArea").value = 
+                    "El árbol está vacío. Por favor, inserte valores en el Punto 8 primero.";
+            } else {
+                document.getElementById("profundidadArea").value = 
+                    `La profundidad máxima del árbol es: ${profundidad}\n\n` +
+                    `(Árbol actual: ${obtenerElementosArbol()})`;
+            }
+        }
+
+        function obtenerProfundidad(nodo) {
+            if (nodo === null) {
+                return 0;
+            }
+
+            let profundidadIzquierda = obtenerProfundidad(nodo.izquierda);
+            let profundidadDerecha = obtenerProfundidad(nodo.derecha);
+
+            return Math.max(profundidadIzquierda, profundidadDerecha) + 1;
+        }
+
+        function obtenerElementosArbol() {
+            let elementos = [];
+            inOrder(raizArbol, elementos);
+            return elementos.join(", ");
+        }
+
+        function reiniciarArbol() {
+            raizArbol = null;
+            document.getElementById("arbolArea").value = "";
+            document.getElementById("profundidadArea").value = "";
+            document.getElementById("arbolVisual").innerHTML = "";
+        }
+
+        // =============================================
+        // Punto 10: Detector de Dependencias Circulares
+        // =============================================
+        let dependencias = {};
+
+        function agregarDependencia() {
+            const modulo = document.getElementById("modulo").value.trim().toUpperCase();
+            const dependenciaDe = document.getElementById("dependencia").value.trim().toUpperCase();
+            
+            if (!modulo || !dependenciaDe) {
+                mostrarResultado("Por favor ingresa ambos valores", "warning");
+                return;
+            }
+            
+            if (!dependencias[modulo]) {
+                dependencias[modulo] = [];
+            }
+            
+            if (dependencias[modulo].includes(dependenciaDe)) {
+                mostrarResultado("Esta dependencia ya fue agregada", "warning");
+                return;
+            }
+            
+            dependencias[modulo].push(dependenciaDe);
+            actualizarVisualizacion();
+            
+            document.getElementById("modulo").value = "";
+            document.getElementById("dependencia").value = "";
+            document.getElementById("modulo").focus();
+        }
+
+        function verificarCiclos() {
+            if (Object.keys(dependencias).length === 0) {
+                mostrarResultado("No hay dependencias para analizar", "info");
+                return;
+            }
+            
+            const tieneCiclo = detectarCiclos(dependencias);
+            
+            if (tieneCiclo) {
+                mostrarResultado("¡Se detectó un problema! Hay dependencias circulares.", "error");
+            } else {
+                mostrarResultado("✓ Todo correcto. No hay dependencias circulares.", "success");
+            }
+        }
+
+        function reiniciarGrafo() {
+            dependencias = {};
+            actualizarVisualizacion();
+            mostrarResultado("Se reiniciaron todas las dependencias", "info");
+        }
+
+        function mostrarResultado(mensaje, tipo) {
+            const resultadoDiv = document.getElementById("resultadoCiclos");
+            resultadoDiv.innerHTML = `<p style="margin: 0;">${mensaje}</p>`;
+            
+            resultadoDiv.className = "result-box";
+            
+            if (tipo === "error") {
+                resultadoDiv.classList.add("error");
+            } else if (tipo === "success") {
+                resultadoDiv.classList.add("success");
+            } else if (tipo === "warning") {
+                resultadoDiv.classList.add("warning");
+            } else {
+                resultadoDiv.classList.add("info");
+            }
+        }
+
+        function actualizarVisualizacion() {
+            const grafoDiv = document.getElementById("grafoVisual");
+            
+            if (Object.keys(dependencias).length === 0) {
+                grafoDiv.innerHTML = '<p style="color: #6c757d; margin: 0;">(Aún no hay dependencias agregadas)</p>';
+                return;
+            }
+            
+            let html = "";
+            for (const modulo in dependencias) {
+                html += `<div style="margin-bottom: 8px;">
+                            <strong>${modulo}</strong> depende de: 
+                            ${dependencias[modulo].join(", ")}
+                        </div>`;
+            }
+            grafoDiv.innerHTML = html;
+        }
+
+        function detectarCiclos(grafo) {
+            const visitados = {};
+            const enRecursion = {};
+            
+            for (const nodo in grafo) {
+                if (esCiclico(nodo, visitados, enRecursion, grafo)) {
+                    return true;
+                }
+            }
+            return false;
+            
+            function esCiclico(nodo, visitados, enRecursion, grafo) {
+                if (!visitados[nodo]) {
+                    visitados[nodo] = true;
+                    enRecursion[nodo] = true;
+                    
+                    const vecinos = grafo[nodo] || [];
+                    for (const vecino of vecinos) {
+                        if (!visitados[vecino] && esCiclico(vecino, visitados, enRecursion, grafo)) {
+                            return true;
+                        } else if (enRecursion[vecino]) {
+                            return true;
+                        }
+                    }
+                }
+                enRecursion[nodo] = false;
+                return false;
+            }
+        }
+
+        // =============================================
+        // Inicialización
+        // =============================================
+        window.onload = function() {
+            initGrid();
+            initAutoGrid();
+            
+            // Configurar eventos para los botones
+            document.getElementById("agregarBtn").addEventListener("click", agregarProducto);
+            document.getElementById("eliminarBtn").addEventListener("click", eliminarProducto);
+            document.getElementById("mostrarBtn").addEventListener("click", mostrarCarrito);
+            document.getElementById("agregarCorreoBtn").addEventListener("click", agregarCorreo);
+            document.getElementById("agregarContactoBtn").addEventListener("click", agregarContacto);
+            document.getElementById("buscarContactoBtn").addEventListener("click", buscarContacto);
+        };
     </script>
 </body>
 </html>

@@ -122,9 +122,9 @@
 
       let output = " Carreteras elegidas en el Árbol de Expansión Mínima:\n\n";
       mst.forEach(([u, v, cost]) => {
-        output += `🔹 ${u} - ${v} (costo: ${cost})\n`;
+        output += ` ${u} - ${v} (costo: ${cost})\n`;
       });
-      output += `\nosto total del MST: ${totalCost}`;
+      output += `\n Costo total del MST: ${totalCost}`;
       document.getElementById("output").textContent = output;
     }
   </script>
